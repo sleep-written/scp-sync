@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "Node16",
+        "moduleResolution": "Node16",
+        
+        "strict": true,
+        "verbatimModuleSyntax": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "baseUrl": "./src",
+        "sourceMap": true,
+
+        "paths": {
+            "@tool/*": [ "./tool/*" ]
+        }
+    }
+}
