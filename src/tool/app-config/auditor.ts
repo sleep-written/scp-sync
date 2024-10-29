@@ -13,7 +13,8 @@ export const auditor = new Auditor({
             type:       {
                 type: 'enum',
                 values: [ 'upload', 'download' ] as const
-            }
+            },
+            useRSA:     { type: 'boolean', optional: true }
         }
     }
 })

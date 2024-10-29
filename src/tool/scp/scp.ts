@@ -12,13 +12,23 @@ export class SCP {
         this.#connection = connection;
     }
 
-    async sendFile(localPath: string, remotePath: string): Promise<void> {
+    async sendFile(localPath: string, remotePath: string, useRSA?: boolean): Promise<void> {
         const { hostname, username } = this.#connection;
-        await cmd('scp', localPath, `${username}@${hostname}:${remotePath}`);
+        const args = [ localPath, `${username}@${hostname}:${remotePath}` ];
+        if (useRSA) {
+            args.unshift('-o', 'HostKeyAlgorithms=ssh-rsa');
+        }
+
+        await cmd('scp', ...args);
     }
 
-    async getFile(localPath: string, remotePath: string): Promise<void> {
+    async getFile(localPath: string, remotePath: string, useRSA?: boolean): Promise<void> {
         const { hostname, username } = this.#connection;
-        await cmd('scp', `${username}@${hostname}:${remotePath}`, localPath);
+        const args = [ `${username}@${hostname}:${remotePath}`, localPath ];
+        if (useRSA) {
+            args.unshift('-o', 'HostKeyAlgorithms=ssh-rsa');
+        }
+
+        await cmd('scp', ...args);
     }
 }

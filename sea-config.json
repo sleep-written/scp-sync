@@ -1,6 +1,0 @@
-{
-    "type": "module",
-    "main": "./dist/bundle.cjs",
-    "output": "sea-prep.blob",
-    "disableExperimentalSEAWarning": true
-}

@@ -4,13 +4,12 @@ import * as inquirer from '@inquirer/prompts';
 import { AppConfig } from './app-config.js';
 
 interface Inject {
-    getParams: Record<
-        keyof ConfigItem,
-        (
-            v?: string,
+    getParams: {
+        [K in keyof ConfigItem]: (
+            v?: ConfigItem[K],
             s?: AbortSignal
-        ) => Promise<string>
-    >;
+        ) => Promise<ConfigItem[K]>
+    };
     config: {
         exist(): Promise<boolean>;
         load(): Promise<ConfigItem[]>;
@@ -55,6 +54,10 @@ export class ConfigManager {
                     message: `Set the remote path: `,
                     required: true
                 }, { signal })),
+                useRSA: inject?.getParams?.useRSA ?? ((v, signal) => inquirer.confirm({
+                    default: v,
+                    message: `Use "ssh-rsa" (legacy) for legacy connections? `,
+                }, { signal })),
             }
         };
     }
@@ -74,12 +77,13 @@ export class ConfigManager {
 
         const data = await this.get();
         const item: ConfigItem = {
-            title:      await getParams.title     ( value?.title ),
-            type:       await getParams.type      ( value?.type ) as any,
-            hostname:   await getParams.hostname  ( value?.hostname ),
-            username:   await getParams.username  ( value?.username ),
-            localPath:  await getParams.localPath ( value?.localPath ),
-            remotePath: await getParams.remotePath( value?.remotePath ),
+            title:      await getParams.title       ( value?.title ),
+            type:       await getParams.type        ( value?.type ) as any,
+            hostname:   await getParams.hostname    ( value?.hostname ),
+            username:   await getParams.username    ( value?.username ),
+            localPath:  await getParams.localPath   ( value?.localPath ),
+            remotePath: await getParams.remotePath  ( value?.remotePath ),
+            useRSA:     await getParams.useRSA      ( value?.useRSA ),
         };
 
         if (typeof index === 'number') {

@@ -1,20 +1,13 @@
 $tsConfig = "tsconfig.build.json"
-$seaConfig = "sea-config.json"
-$execOutput = "app.exe"
-$blobOutput = (Get-Content $seaConfig -Raw | ConvertFrom-Json).output
+$execOutput = "scp-sync.exe"
 $distFolder = (Get-Content "tsconfig.json" -Raw | ConvertFrom-Json).compilerOptions.outDir
 
-function Clean-Files {
+function Clear-Files {
     param([boolean]$removeExec)
 
     if (Test-Path $distFolder) {
         Write-host "Deleting ""$distFolder""..."
         Remove-Item -Path $distFolder -Recurse
-    }
-
-    if (Test-Path $blobOutput) {
-        Write-host "Deleting ""$blobOutput""..."
-        Remove-Item -Path $blobOutput
     }
 
     if ((Test-Path $execOutput) -and ($removeExec)) {
@@ -23,24 +16,14 @@ function Clean-Files {
     }
 }
 
-function Build-Exec {
-    Clean-Files($true)
+function Write-Executable {
+    Clear-Files($true)
 
     Write-Output "Transpiling project..."
     npx bb-path-alias build $tsConfig
-    npx rollup -c
+    npx nexe -i $distFolder\index.js -o $execOutput --build
 
-    Write-Output "Generating blob..."
-    node --input-type=module --experimental-sea-config $seaConfig
-
-    Write-Output "Populating executable..."
-    node -e "require('fs').copyFileSync(process.execPath, '$execOutput');"
-    signtool remove /s $execOutput
-
-    npx postject $execOutput NODE_SEA_BLOB $blobOutput `
-        --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
-
-    Clean-Files($false)
+    Clear-Files($false)
 }
 
 function Show-Help {
@@ -53,11 +36,11 @@ function Show-Help {
 
 switch ($args[0]) {
     "clean" {
-        Clean-Files($true)
+        Clear-Files($true)
     }
 
     "build" {
-        Build-Exec
+        Write-Executable
     }
 
     default {

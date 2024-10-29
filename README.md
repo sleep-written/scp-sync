@@ -12,17 +12,25 @@
 
 ### Download the executable
 
-Simply download the executable [here](https://github.com/sleep-written/scp-sync/releases/tag/v0.0.2).
+Simply download the executable [here](https://github.com/sleep-written/scp-sync/releases/tag/v0.0.3).
 
 ### Generating your executable (for Windows, requires "Node.js" v20+)
 
 1. Install dependencies:
-   ```bash
+   ```ps
    npm ci
    ```
 
-2. Start the application:
-   ```bash
+2. Install all required build tools (and dependencies):
+   ```ps
+   Set-ExecutionPolicy Unrestricted -Force
+   iex ((New-Object System.Net.WebClient).DownloadString('https://boxstarter.org/bootstrapper.ps1'))
+   get-boxstarter -Force
+   Install-BoxstarterPackage https://raw.githubusercontent.com/nodejs/node/master/tools/bootstrap/windows_boxstarter -DisableReboots
+   ```
+
+2. Compile the application:
+   ```ps
    npm run build
    ```
 

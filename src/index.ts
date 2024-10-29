@@ -4,7 +4,6 @@ import chalk from 'chalk';
 
 import { AppConfig, ConfigManager } from '@tool/app-config/index.js';
 import { pressAnyKey, logger } from './logger.js';
-import { SSHConfig } from '@tool/ssh-config/index.js';
 import { Menu } from '@tool/menu/index.js';
 import { SCP } from '@tool/scp/index.js';
 
@@ -32,10 +31,11 @@ async function main(): Promise<void> {
                                 console.log('');
                                 logger.info('Initialize transfer...');
                                 const scp = new SCP(value);
+                                const { localPath, remotePath, useRSA } = value;
                                 if (value.type === 'upload') {
-                                    await scp.sendFile(value.localPath, value.remotePath);
+                                    await scp.sendFile(localPath, remotePath, useRSA);
                                 } else {
-                                    await scp.getFile(value.localPath, value.remotePath);
+                                    await scp.getFile(localPath, remotePath, useRSA);
                                 }
                                 
                                 logger.info('Transfer complete!');
@@ -51,34 +51,6 @@ async function main(): Promise<void> {
                                 await pressAnyKey();
 
                             }
-                        }
-                    },
-                    {
-                        name: '→ Patch ssh config',
-                        value: async () => {
-                            console.log('');
-                            console.log('  This options creates/modify the file "~/.ssh/config",');
-                            console.log(`  adding to the "${value.hostname}" the parameter:`);
-                            console.log(`  - HostkeyAlgorithms +ssh-rsa\n`);
-                            const menu = new Menu('Are you sure?', [
-                                {
-                                    name: 'No...'
-                                },
-                                {
-                                    name: 'Yes!!!',
-                                    value: async () => {
-                                        const sshConfig = await SSHConfig.load();
-                                        sshConfig.set(value.hostname, {
-                                            HostkeyAlgorithms: { value: '+ssh-rsa' },
-                                        });
-                                        await sshConfig.save();
-                                        console.log(`  The file "~/.ssh/config" has been successfully patched!\n`);
-                                        await pressAnyKey();
-                                    }
-                                },
-                            ]);
-
-                            await menu.execute();
                         }
                     },
                     {
