@@ -58,8 +58,7 @@ async function main(): Promise<void> {
                         value: async () => {
                             console.log('');
                             console.log('  This options creates/modify the file "~/.ssh/config",');
-                            console.log(`  adding to the "${value.hostname}" these parameters:`);
-                            console.log(`  - PubkeyAcceptedAlgorithms +ssh-rsa`);
+                            console.log(`  adding to the "${value.hostname}" the parameter:`);
                             console.log(`  - HostkeyAlgorithms +ssh-rsa\n`);
                             const menu = new Menu('Are you sure?', [
                                 {
@@ -70,12 +69,7 @@ async function main(): Promise<void> {
                                     value: async () => {
                                         const sshConfig = await SSHConfig.load();
                                         sshConfig.set(value.hostname, {
-                                            PubkeyAcceptedAlgorithms: {
-                                                value: '+ssh-rsa',
-                                            },
-                                            HostkeyAlgorithms: {
-                                                value: '+ssh-rsa',
-                                            },
+                                            HostkeyAlgorithms: { value: '+ssh-rsa' },
                                         });
                                         await sshConfig.save();
                                         console.log(`  The file "~/.ssh/config" has been successfully patched!\n`);
@@ -89,10 +83,7 @@ async function main(): Promise<void> {
                     },
                     {
                         name: '→ Modify',
-                        value: new Menu('Are you sure?', [
-                            { name: 'No...' },
-                            { name: 'Yes!!!', value: () => configManager.set({ value, index }) },
-                        ])
+                        value: () => configManager.set({ value, index })
                     },
                     {
                         name: '→ Delete',

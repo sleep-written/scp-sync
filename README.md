@@ -12,7 +12,7 @@
 
 ### Download the executable
 
-Simply download the executable [here](https://github.com/sleep-written/scp-sync/releases/tag/v0.0.1).
+Simply download the executable [here](https://github.com/sleep-written/scp-sync/releases/tag/v0.0.2).
 
 ### Generating your executable (for Windows, requires "Node.js" v20+)
 

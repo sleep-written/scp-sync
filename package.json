@@ -1,7 +1,7 @@
 {
   "name": "scp-sync",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "clean": "powershell ./tool.ps1 clean",
     "build": "powershell ./tool.ps1 build",
