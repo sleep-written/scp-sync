@@ -1,0 +1,13 @@
+code;en;es
+main-menu-title;Main menu.;Menú principal.
+main-menu-message;Select an option:;Seleccione una opción:
+main-menu-option-add;+ Add new profile.;+ Agregar nuevo perfil.
+main-menu-option-exit;- Close program.;- Cerrar programa.
+profile-menu-title;"Options for ""${name}"":";"Opciones para ""${name}"":"
+profile-menu-option-execute;→ Execute.;→ Ejecutar.
+profile-menu-option-modify;→ Modify.;→ Modificar.
+profile-menu-option-delete;→ Delete.;→ Borrar.
+profile-menu-option-return;← Return.;← Volver.
+transfer-initialize;Initialize transfer...;Inicializando transferencia...
+transfer-complete;Transfer complete!;¡Transferencia completada!
+transfer-failed;Failed transfer.;Transferencia fallida.

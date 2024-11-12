@@ -2,5 +2,8 @@
     "type": "module",
     "main": "./dist/bundle.cjs",
     "output": "sea-prep.blob",
-    "disableExperimentalSEAWarning": true
+    "disableExperimentalSEAWarning": true,
+    "assets": {
+        "locale.csv": "./locale.csv"
+    }
 }

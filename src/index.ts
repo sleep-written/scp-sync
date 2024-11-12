@@ -3,33 +3,33 @@ import { homedir } from 'os';
 import chalk from 'chalk';
 
 import { AppConfig, ConfigManager } from '@tool/app-config/index.js';
-import { pressAnyKey, logger } from './logger.js';
+import { pressAnyKey, logger, locale } from './logger.js';
 import { Menu } from '@tool/menu/index.js';
 import { SCP } from '@tool/scp/index.js';
 
 async function main(): Promise<void> {
     let loop = true;
     const configPath = process.argv.some(x => x === '--debug')
-        ?   resolve('./.anzio-transfer.json')
-        :   resolve(homedir(), '.anzio-transfer.json');
+        ?   resolve('./.scp-sync.config.json')
+        :   resolve(homedir(), '.scp-sync.config.json');
 
     while (loop) {
         console.clear();
-        logger.info('Main menu.');
+        logger.info(locale.get('main-menu-title'));
 
         const config = new AppConfig(configPath);
         const configManager = new ConfigManager({ config });
         const configData = await configManager.get();
-        const menu = new Menu('Select an option:', [
+        const menu = new Menu(locale.get('main-menu-message'), [
             ...configData.map((value, index) => ({
                 name: '→ ' + value.title,
-                value: new Menu('Options:', [
+                value: new Menu(locale.get('profile-menu-title', { name: value.title }), [
                     {
-                        name: '→ Execute',
+                        name: locale.get('profile-menu-option-execute'),
                         async value(): Promise<void> {
                             try {
                                 console.log('');
-                                logger.info('Initialize transfer...');
+                                logger.info(locale.get('transfer-initialize'));
                                 const scp = new SCP(value);
                                 const { localPath, remotePath, useRSA } = value;
                                 if (value.type === 'upload') {
@@ -38,11 +38,11 @@ async function main(): Promise<void> {
                                     await scp.getFile(localPath, remotePath, useRSA);
                                 }
                                 
-                                logger.info('Transfer complete!');
+                                logger.info(locale.get('transfer-complete'));
                                 await pressAnyKey();
 
                             } catch (err: any) {
-                                logger.error('Transfer failed:');
+                                logger.info(locale.get('transfer-failed'));
                                 const message = (err?.message as string)
                                     .split(/\n/gi)
                                     .map(x => chalk.grey(`\t  ${x}`));
@@ -54,27 +54,29 @@ async function main(): Promise<void> {
                         }
                     },
                     {
-                        name: '→ Modify',
+                        name: locale.get('profile-menu-option-modify'),
                         value: () => configManager.set({ value, index })
                     },
                     {
-                        name: '→ Delete',
+                        name: locale.get('profile-menu-option-delete'),
                         value: new Menu('Are you sure?', [
                             { name: 'No...' },
                             { name: 'Yes!!!', value: () => configManager.del(index) },
                         ])
                     },
-                    { name: '← Return' }
+                    {
+                        name: locale.get('profile-menu-option-return'),
+                    }
                 ])
             })),
             {
-                name: '→ Add',
+                name: locale.get('main-menu-option-add'),
                 value(): Promise<void> {
                     return configManager.set();
                 }
             },
             {
-                name: '→ Exit',
+                name: locale.get('main-menu-option-exit'),
                 async value(): Promise<void> {
                     loop = false;
                 }

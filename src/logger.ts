@@ -1,4 +1,5 @@
 import { createPrompt, useKeypress } from '@inquirer/core';
+import { Locale } from '@tool/locale/index.js';
 import { Logger } from 'tslog';
 
 export const logger = new Logger({
@@ -10,6 +11,7 @@ export const logger = new Logger({
     ].join(' ')
 });
 
+export const locale = new Locale();
 export async function pressAnyKey(message?: string): Promise<void> {
     const input = createPrompt<void, {}>((_, done) => {
         // Llamamos a done() en cualquier tecla presionada
