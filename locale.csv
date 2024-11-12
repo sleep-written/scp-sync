@@ -1,6 +1,7 @@
 code;en;es
 main-menu-title;Main menu.;Menú principal.
 main-menu-message;Select an option:;Seleccione una opción:
+main-menu-complete;Procedure finished successfully!;Procedimiento finalizado correctamente!
 main-menu-option-add;+ Add new profile.;+ Agregar nuevo perfil.
 main-menu-option-exit;- Close program.;- Cerrar programa.
 profile-menu-title;"Options for ""${name}"":";"Opciones para ""${name}"":"
@@ -8,6 +9,20 @@ profile-menu-option-execute;→ Execute.;→ Ejecutar.
 profile-menu-option-modify;→ Modify.;→ Modificar.
 profile-menu-option-delete;→ Delete.;→ Borrar.
 profile-menu-option-return;← Return.;← Volver.
+profile-menu-option-delete-message;Are you sure to delete this profile?;¿Está seguro que desea eliminar este perfil?
+profile-menu-option-delete-true;Yes!;¡Sí!
+profile-menu-option-delete-false;No...;No...
 transfer-initialize;Initialize transfer...;Inicializando transferencia...
 transfer-complete;Transfer complete!;¡Transferencia completada!
 transfer-failed;Failed transfer.;Transferencia fallida.
+app-config-invalid;The configuration file is invalid.;El archivo de configuración es inválido.
+app-config-generation-failed;Configuration generation failed.;Fallo al generar archivo de configuración.
+app-config-set-title;"Set the profile name: ";"Asigne un nombre para el perfil: "
+app-config-set-type;"Set the process type: ";"Asigne el tipo de proceso: "
+app-config-set-hostname;"Set the remote host: ";"Asigne el host remoto: "
+app-config-set-username;"Set the remote user name: ";"Asigne el nombre de usuario remoto: "
+app-config-set-local-path;"Set the local path: ";Asigne la ruta local:
+app-config-set-remote-path;"Set the remote path: ";"Asigne la ruta remota: "
+app-config-set-ssh-rsa;"Use ""ssh-rsa"" (deprecated) for legacy connections? ";"Desea usar ""ssh-rsa"" (deprecado) para conexiones antiguas?"
+app-config-type-option-upload;Upload file(s);Subir archivo(s)
+app-config-type-option-download;Download file(s);Bajar archivo(s)

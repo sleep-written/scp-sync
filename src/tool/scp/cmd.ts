@@ -22,7 +22,7 @@ export async function cmd(command: string, ...args: string[]) {
                     .concat(stderr)
                     .toString('utf-8');
 
-                reject(new Error(message ?? 'Error no identificado...'));
+                reject(new Error(message ?? 'Error not identified...'));
             } else {
                 const message = Buffer
                     .concat(stdout)

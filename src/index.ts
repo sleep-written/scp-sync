@@ -2,8 +2,8 @@ import { resolve } from 'path';
 import { homedir } from 'os';
 import chalk from 'chalk';
 
-import { AppConfig, ConfigManager } from '@tool/app-config/index.js';
 import { pressAnyKey, logger, locale } from './logger.js';
+import { AppConfig, ConfigManager } from '@tool/app-config/index.js';
 import { Menu } from '@tool/menu/index.js';
 import { SCP } from '@tool/scp/index.js';
 
@@ -59,9 +59,14 @@ async function main(): Promise<void> {
                     },
                     {
                         name: locale.get('profile-menu-option-delete'),
-                        value: new Menu('Are you sure?', [
-                            { name: 'No...' },
-                            { name: 'Yes!!!', value: () => configManager.del(index) },
+                        value: new Menu(locale.get('profile-menu-option-delete-message'), [
+                            {
+                                name: locale.get('profile-menu-option-delete-false')
+                            },
+                            {
+                                name: locale.get('profile-menu-option-delete-true'),
+                                value: () => configManager.del(index)
+                            },
                         ])
                     },
                     {
@@ -88,5 +93,5 @@ async function main(): Promise<void> {
 }
 
 main()
-    .then(() => logger.info('Complete!'))
-    .catch(err => logger.error(err?.message));
+    .then (()  =>   logger.info(locale.get('main-menu-complete')))
+    .catch(err =>   logger.error(err?.message));

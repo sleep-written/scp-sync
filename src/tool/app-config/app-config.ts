@@ -3,6 +3,7 @@ import type { ConfigItem } from './auditor.js';
 import { access, readFile, writeFile } from 'fs/promises';
 import { basename, resolve } from 'path';
 import { auditor } from './auditor.js';
+import { locale } from '@/logger.js';
 
 export class AppConfig {
     #path: string;
@@ -34,7 +35,7 @@ export class AppConfig {
             return auditor.audit(json);
         } catch (err) {
             throw new Error(
-                'El archivo de configuración es inválido.',
+                locale.get('app-config-invalid'),
                 { cause: err }
             );
         }
@@ -47,7 +48,7 @@ export class AppConfig {
             await writeFile(this.#path, text, 'utf-8');
         } catch (err) {
             throw new Error(
-                'Fallo al generar archivo de configuración.',
+                locale.get('app-config-generation-failed'),
                 { cause: err }
             );
         }

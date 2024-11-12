@@ -2,6 +2,7 @@ import type { ConfigItem } from './auditor.js';
 
 import * as inquirer from '@inquirer/prompts';
 import { AppConfig } from './app-config.js';
+import { locale } from '@/logger.js';
 
 interface Inject {
     getParams: {
@@ -26,37 +27,40 @@ export class ConfigManager {
             getParams: {
                 title: inject?.getParams?.title ?? ((v, signal) => inquirer.input({
                     default: v,
-                    message: `Set the process name: `,
+                    message: locale.get('app-config-set-title'),
                     required: true
                 }, { signal })),
                 type: inject?.getParams?.type ?? ((v, signal) => inquirer.select<ConfigItem['type']>({
                     default: v,
-                    message: `Set the process type: `,
-                    choices: [ 'upload', 'download' ]
+                    message: locale.get('app-config-set-type'),
+                    choices: [
+                        { name: locale.get('app-config-type-option-upload'),   value: 'upload', },
+                        { name: locale.get('app-config-type-option-download'), value: 'download' },
+                    ]
                 }, { signal })),
                 hostname: inject?.getParams?.hostname ?? ((v, signal) => inquirer.input({
                     default: v,
-                    message: `Set the remote host: `,
+                    message: locale.get('app-config-set-hostname'),
                     required: true
                 }, { signal })),
                 username: inject?.getParams?.username ?? ((v, signal) => inquirer.input({
                     default: v,
-                    message: `Set the user name: `,
+                    message: locale.get('app-config-set-username'),
                     required: true
                 }, { signal })),
                 localPath: inject?.getParams?.localPath ?? ((v, signal) => inquirer.input({
                     default: v,
-                    message: `Set the local path: `,
+                    message: locale.get('app-config-set-local-path'),
                     required: true
                 }, { signal })),
                 remotePath: inject?.getParams?.remotePath ?? ((v, signal) => inquirer.input({
                     default: v,
-                    message: `Set the remote path: `,
+                    message: locale.get('app-config-set-remote-path'),
                     required: true
                 }, { signal })),
                 useRSA: inject?.getParams?.useRSA ?? ((v, signal) => inquirer.confirm({
                     default: v,
-                    message: `Use "ssh-rsa" (legacy) for legacy connections? `,
+                    message: locale.get('app-config-set-ssh-rsa'),
                 }, { signal })),
             }
         };
