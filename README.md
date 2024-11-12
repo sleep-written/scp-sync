@@ -4,9 +4,10 @@
 
 ## Features
 
--   **Profile Management**: Create reusable profiles for frequent file transfers, eliminating the need to retype SCP commands.
--   **File Transfer Automation**: Automatically generate and execute SCP commands for uploading and downloading files based on selected profiles.
--   **Optional SSH Parameters**: Add `PubkeyAcceptedAlgorithms +ssh-rsa` and `HostkeyAlgorithms +ssh-rsa` options to a profile if needed for specific SSH configurations.
+-  **Profile Management**: Create reusable profiles for frequent file transfers, eliminating the need to retype SCP commands.
+-  **File Transfer Automation**: Automatically generate and execute SCP commands for uploading and downloading files based on selected profiles.
+-  **Optional SSH Parameters**: Add `PubkeyAcceptedAlgorithms +ssh-rsa` and `HostkeyAlgorithms +ssh-rsa` options to a profile if needed for specific SSH configurations.
+-  **Multi language support**: Now the interface changes according the OS language. For now the app has english (default) and spanish support.
 
 ## Launch the application
 
